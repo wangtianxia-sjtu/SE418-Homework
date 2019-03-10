@@ -20,11 +20,16 @@
       <p v-show="end == ''">
         Input something...
       </p>
-      <el-button type="primary" :disabled="!start_valid || !end_valid" style="margin-top:3%;" @click="findLadder">Go</el-button>
+      <el-button type="primary" :disabled="!start_valid || !end_valid || start == end" style="margin-top:3%;" @click="findLadder1">Go</el-button>
       <br/>
-      {{res}}
+      <p v-show="start == end">
+        Two words should be different.
+      </p>
       <p v-show="loading">
         loading
+      </p>
+      <p v-show="haveSearched">
+      {{final_result}}
       </p>
     </div>
   </div>
@@ -38,8 +43,9 @@ export default {
       start: 'code',
       end: 'data',
       reg: /^[A-Za-z]+$/,
-      res: ["code","cade","cate","date","data"],
-      loading: false
+      res: null,
+      loading: false,
+      haveSearched: false
     }
   },
   computed: {
@@ -54,10 +60,22 @@ export default {
     },
     end_valid: function () {
       return this.reg.test(this.end)
+    },
+    final_result: function () {
+      if(this.res == null)
+        return ''
+      try{
+      if(this.res.length == 0)
+        return 'No such ladder'
+      }
+      catch(Exception) {
+        return ''
+      }
+      return this.res
     }
   },
   methods: {
-    findLadder () {
+    findLadder: function () {
       this.loading = true
       this.$axios
         .get('http://localhost:8964/search?start='+this.start_lower+'&end='+this.end_lower)
@@ -67,6 +85,23 @@ export default {
             this.res = 1
       } else {
             this.res = 0
+      }
+          })
+        .finally(() => this.loading = false)
+    },
+    findLadder1: function () {
+      this.loading = true
+      this.$axios({
+        method: 'get',
+        url: 'http://localhost:8964/search?start='+this.start_lower+'&end='+this.end_lower
+      }).then((response) => {
+          // this.res = response.status
+          if (response.status !== 200) {
+            this.res = "Error!"
+            this.haveSearched = true
+      } else {
+            this.res = response.data
+            this.haveSearched = true
       }
           })
         .finally(() => this.loading = false)
