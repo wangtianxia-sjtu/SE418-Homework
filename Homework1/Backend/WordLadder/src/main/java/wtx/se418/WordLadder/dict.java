@@ -6,11 +6,11 @@ import org.springframework.core.io.ClassPathResource;
 
 public class dict {
     private static Set<String> dictionary = new TreeSet<String>();
-    
-    private void readFileByLine(String strFile){
+
+    private void readFileByLine(InputStream input){
         try {
-            File file = new File(strFile);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            InputStreamReader reader = new InputStreamReader(input);
+            BufferedReader bufferedReader = new BufferedReader(reader);
             String strLine = null;
             while(null != (strLine = bufferedReader.readLine())){
                 dictionary.add(strLine);
@@ -23,12 +23,13 @@ public class dict {
     public dict()  throws IOException
     {
         ClassPathResource source = new ClassPathResource("static/dictionary.txt");
-        readFileByLine(source.getFile().getAbsolutePath());
+        InputStream input = source.getInputStream();
+        readFileByLine(input);
         System.out.println("Word Count: " + dictionary.size());
     }
     
-    public dict(String dictName){
-        readFileByLine(dictName);
+    public dict(InputStream input){
+        readFileByLine(input);
         System.out.println("Word Count: " + dictionary.size());
     }
     

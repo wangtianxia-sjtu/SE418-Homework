@@ -1,4 +1,4 @@
-package com.weixm.wordLadder.config;
+package wtx.se418.WordLadder.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
