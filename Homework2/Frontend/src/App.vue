@@ -20,13 +20,16 @@
       <p v-show="end == ''">
         Input something...
       </p>
-      <el-button type="primary" :disabled="!start_valid || !end_valid || start == end" style="margin-top:3%;" @click="findLadder1">Go</el-button>
+      <el-button type="primary" :disabled="!start_valid || !end_valid || start == end || start.length != end.length" style="margin-top:3%;" @click="findLadder1">Go</el-button>
       <br/>
       <p v-show="start == end">
         Two words should be different.
       </p>
       <p v-show="loading">
         loading
+      </p>
+      <p v-show="start.length != end.length">
+        Two words must be of the same size.
       </p>
       <p v-show="haveSearched">
       {{final_result}}
