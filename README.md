@@ -17,7 +17,8 @@ A simple Word Ladder application, using RESTful API.
 
 This is almost a replica of Homework 1, but there are also some improvements, including:
 
-* Add white box tests for a few classes.
-* Fix the bug "File not found" when starting the service with a packaged jar file.
-* Test reports are available.
-* Fix a bug in the front end.
+* Add white box tests for a few classes. (Phase I)
+* Fix the bug "File not found" when starting the service with a packaged jar file. (Phase I)
+* Test reports are available. (Phase I)
+* Fix a bug in the front end. (Phase I)
+* Enable Spring Boot Actuator. (Phase II)
