@@ -24,3 +24,7 @@ npm run serve
 ## RESTful API
 
 /search?start=good?end=last
+
+/actuator/health (only for admin)
+
+other actuator APIs (like /actuator/info) (only for admin)

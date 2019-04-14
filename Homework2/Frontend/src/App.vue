@@ -2,7 +2,11 @@
   <div id="app">
     <img src="./assets/logo.png">
     <div>
-      <h1>Word Ladder Reimplementation with Vue.js and Spring Boot </h1>
+      <h1>Word Ladder Reimplementation with Vue.js and Spring Boot</h1>
+      <h1>A simple demo of Spring Security</h1>
+      <el-row>
+        <el-col :span="12">
+          <div>
       Start from: <el-input v-model="start" placeholder="Input something..." style="width:15%;margin-top:3%;"></el-input>
       <br/>
       <p v-show="!start_valid && start != ''">
@@ -34,11 +38,46 @@
       <p v-show="haveSearched">
       {{final_result}}
       </p>
+      </div>
+        </el-col>
+        <el-col :span="12">
+          <div>
+              Login
+              <br/>
+              Username: <el-input v-model="username" placeholder="Username" style="width:20%;margin-top:3%;"></el-input>
+              <br/>
+              Password: <el-input placeholder="Password" v-model="password" show-password style="width:20%;margin-top:3%;"></el-input>
+              <br/>
+              <el-button type="primary" :disabled="!username || !password" style="margin-top:3%;" @click="login">Login</el-button>
+              <p>
+                Username: user Password: password for a common user.<br/><br/>
+                Username: admin Password: admin for an admin.
+              </p>
+              <p v-if="haveloggedin">
+                You have successfully logged in.
+              </p>
+              <p v-else>
+                You are not logged in.
+              </p>
+              <p v-show="networkError">
+                Network Error.
+              </p>
+              <p v-show="failure">
+                Incorrect username or password.
+              </p>
+              <el-button type="primary" style="margin-top:3%;" @click="getStatus">Get status (Only for admin user) </el-button>
+              <p>
+                {{status}}
+              </p>
+          </div>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: 'app',
   data () {
@@ -48,7 +87,13 @@ export default {
       reg: /^[A-Za-z]+$/,
       res: null,
       loading: false,
-      haveSearched: false
+      haveSearched: false,
+      haveloggedin: false,
+      username: '',
+      password: '',
+      networkError: false,
+      failure: false,
+      status: null
     }
   },
   computed: {
@@ -96,7 +141,8 @@ export default {
       this.loading = true
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8964/search?start='+this.start_lower+'&end='+this.end_lower
+        url: 'http://localhost:8964/search?start='+this.start_lower+'&end='+this.end_lower,
+        withCredentials: true
       }).then((response) => {
           // this.res = response.status
           if (response.status !== 200) {
@@ -108,6 +154,53 @@ export default {
       }
           })
         .finally(() => this.loading = false)
+    },
+    getStatus: function () {
+      this.$axios({
+        method: 'get',
+        url: 'http://localhost:8964/actuator/health',
+        withCredentials: true
+      }).then((response) => {
+          // this.res = response.status
+          if (response.status !== 200) {
+            this.status = "Error!"
+      } else {
+            this.status = JSON.stringify(response.data)
+      }
+      }).catch((error) => {
+        this.status = error
+      })
+    },
+    login: function () {
+      this.$axios({
+        method: 'post',
+        url: 'http://localhost:8964/login',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: qs.stringify({
+          'username': this.username,
+          'password': this.password
+        }),
+        withCredentials: true
+      }).then((response) => {
+          // this.res = response.status
+          if (response.status !== 200) {
+            this.networkError = true
+      } else {
+            if(response.data==1)
+            {
+              this.haveloggedin = true
+              this.failure = false
+              this.networkError = false
+            }
+            else
+            {
+              this.failure = true
+              this.haveloggedin = false
+            }
+      }
+          })
     }
   }
 }
