@@ -16,9 +16,41 @@ public class WordLadderController {
         finder = new bfs();
     }
 
+    @RequestMapping("/success")
+    public int SuccessLogin()
+    {
+        return 1;
+    }
+
+    @RequestMapping("/unauthorized")
+    public ErrorMessage Unauthorized()
+    {
+        return new ErrorMessage("Permission Denied");
+    }
+
+    @RequestMapping("/failure")
+    public int FailureLogin()
+    {
+        return 0;
+    }
+
     @RequestMapping("/search")
     public ArrayList<String> LadderSearcher(@RequestParam(value="start", defaultValue="code") String start, @RequestParam(value="end", defaultValue="data") String end)
     {
         return finder.findPath(start,end);
     }
+}
+
+class ErrorMessage {
+
+    private final String error;
+
+    public ErrorMessage(String content) {
+        this.error = content;
+    }
+
+    public String getError() {
+        return error;
+    }
+
 }
