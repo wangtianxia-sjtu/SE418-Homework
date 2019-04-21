@@ -18,7 +18,7 @@ protected void configure(HttpSecurity http) throws Exception {
     .cors().and()
     .csrf().disable()
 	.authorizeRequests()
-            .antMatchers("/login", "/success", "/failure", "/unauthorized","/logout").permitAll()
+            .antMatchers("/login", "/success", "/failure", "/unauthorized","/logout","/actuator/prometheus").permitAll()
             .antMatchers("/actuator", "/actuator/**").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and()

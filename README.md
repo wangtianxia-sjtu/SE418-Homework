@@ -27,3 +27,10 @@ This is NOT a replica of Homework 1, because there are a lot of improvements, in
 
 ![avatar](./img/homework2.JPG)
 
+## Task 2
+
+* Analyze the resource comsumption of the Word Ladder application
+    
+    * Prometheus Usage
+    * Jmeter Usage
+    * Java VisualVM Usage
