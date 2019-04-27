@@ -36,7 +36,34 @@ public class ActuatorTests {
 
 	@Test
 	public void checkActuator() throws Exception {
+        this.mockMvc.perform(get("/actuator")).andDo(print()).andExpect(status().isOk()).andReturn();
+    }
+
+    /*
+	 * Test the actuator /actuator/health API
+	 */
+
+	@Test
+	public void checkHealth() throws Exception {
         this.mockMvc.perform(get("/actuator/health")).andDo(print()).andExpect(status().isOk()).andReturn();
+    }
+
+    /*
+	 * Test the actuator /actuator/info API
+	 */
+
+	@Test
+	public void checkInfo() throws Exception {
+        this.mockMvc.perform(get("/actuator/info")).andDo(print()).andExpect(status().isOk()).andReturn();
+    }
+
+    /*
+	 * Test the actuator /actuator/env API
+	 */
+
+	@Test
+	public void checkEnv() throws Exception {
+        this.mockMvc.perform(get("/actuator/env")).andDo(print()).andExpect(status().isOk()).andReturn();
     }
 
 	/*
@@ -44,7 +71,7 @@ public class ActuatorTests {
 	 */
 
 	@Test
-	public void checkHealth() throws Exception {
+	public void checkHealthData() throws Exception {
         MvcResult result;
         String response_string;
         result = this.mockMvc.perform(get("/actuator/health")).andDo(print()).andExpect(status().isOk()).andReturn();
