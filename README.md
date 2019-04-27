@@ -34,3 +34,9 @@ This is NOT a replica of Homework 1, because there are a lot of improvements, in
     * Prometheus Usage
     * Jmeter Usage
     * Java VisualVM Usage
+
+## Task 3
+
+* Containerize a Spring Boot Application
+
+    * Docker Usage
