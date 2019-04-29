@@ -54,4 +54,4 @@ docker push wangtianxia/spring-boot-word-ladder:v1.1
 docker run -d -p 8964:8964 --name wordladder wangtianxia/spring-boot-word-ladder:v1.1
 ```
 
-去 [DockerHub Repository](https://cloud.docker.com/repository/docker/wangtianxia/spring-boot-word-ladder) 看看。
+去 [DockerHub Repository](https://hub.docker.com/r/wangtianxia/spring-boot-word-ladder) 看看。
