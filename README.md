@@ -40,3 +40,7 @@ This is NOT a replica of Homework 1, because there are a lot of improvements, in
 * Containerize a Spring Boot Application
 
     * Docker Usage
+
+## Task 4
+
+* Implement a Producer-Consumer model in Java
