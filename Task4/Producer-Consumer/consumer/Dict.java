@@ -14,6 +14,7 @@ public class Dict {
             while(null != (strLine = bufferedReader.readLine())){
                 dictionary.add(strLine);
             }
+            bufferedReader.close();
         }catch(Exception e){
             e.printStackTrace();
         }
